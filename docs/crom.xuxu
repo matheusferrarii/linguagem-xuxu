@@ -1,0 +1,13 @@
+agenda {
+    alarme("08:00") {
+        avisa("Bom dia! Hora de regar o chuchuzeiro")
+    }
+
+    dacerta(a cada "30min") {
+        cutuca(verificarPraga)
+    }
+}
+
+receita verificarPraga() {
+    feirante("Verificando se tem praga no chuchuzeiro")
+}

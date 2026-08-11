@@ -1,0 +1,24 @@
+casca Comestivel {
+    receita cozinhar()
+}
+
+fruteira Legume enxertado Comestivel {
+    xuxu nome
+
+    receita construtor(nome) {
+        isso.nome = nome
+    }
+
+    receita cozinhar() {
+        feirante(isso.nome + " esta cozinhando")
+    }
+}
+
+fruteira Chuchu broto Legume {
+    receita cozinhar() {
+        feirante("Chuchu refogado, sem graca de qualquer jeito")
+    }
+}
+
+xuxuMaduro c = novo Chuchu("Chuchuzinho")
+c.cozinhar()

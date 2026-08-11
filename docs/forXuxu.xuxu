@@ -1,0 +1,11 @@
+xuxuMaduro cesto = [1, 2, 3, 4]
+
+praTodoXuxu (item em cesto) {
+    talvez (item == 3) {
+        pula
+    }
+    talvez (item == 4) {
+        chega
+    }
+    feirante(item)
+}

@@ -1,0 +1,4 @@
+xuxuMaduro nome = "Chuchu"
+xuxuVerde idade = 1
+
+feirante("Ola, eu sou o " + nome)

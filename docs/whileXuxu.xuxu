@@ -1,0 +1,6 @@
+xuxuVerde contador = 0
+
+enquatoTiverXuxu (contador < 5) {
+    feirante("Xuxu numero " + contador)
+    contador = contador + 1
+}

@@ -1,0 +1,9 @@
+xuxuVerde nota = 6
+
+talvez (nota >= 7) {
+    feirante("Aprovado")
+} fudeu (nota >= 5) {
+    feirante("Recuperacao")
+} ouEntao {
+    feirante("Reprovado, sem graca igual chuchu")
+}
