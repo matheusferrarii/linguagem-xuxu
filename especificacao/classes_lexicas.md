@@ -1,0 +1,12 @@
+palavra_reservada => palavras que possuem um significado específico dentro da linguagem.
+identificador => nomes usados para identificar variáveis, funções, classes e outros elementos.
+inteiro => números sem casas decimais.
+decimal => números que possuem casas decimais.
+string => sequência de caracteres usada para representar textos.
+caractere => representa um único caractere.
+operador_aritmetico => usado para realizar operações matemáticas.
+operador_relacional => usado para comparar valores.
+operador_logico => usado para realizar operações lógicas entre condições.
+atribuicao => usado para atribuir um valor a uma variável.
+delimitador => usado para separar ou delimitar partes do código.
+comentario => texto inserido no código que não é executado pela linguagem.
