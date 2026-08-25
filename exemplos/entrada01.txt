@@ -1,0 +1,2 @@
+xuxuVerde nota = 6
+xuxuMaduro media = 7.5

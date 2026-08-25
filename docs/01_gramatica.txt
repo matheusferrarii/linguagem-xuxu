@@ -1,0 +1,23 @@
+A gramatica da Xuxu (especificacao de padroes lexicos), escrita por extenso no primeiro modulo.
+Esta e a forma de partida, ainda nao fatorada; sera revisitada no modulo de gramaticas livres
+de contexto.
+
+especificacao := patternDecl* ;
+patternDecl   := "pattern" ID "=" "/" REGEX "/" ";" ;
+
+regex  := alt ;
+alt    := concat ( "|" concat )* ;
+concat := repeat* ;
+repeat := atom ( "*" | "+" | "?" )? ;
+atom   := CHAR | "." | "[" classe "]" | "(" alt ")" ;
+
+
+A gramatica hospedeira e trivial: e so uma lista de declaracoes, sem aninhamento, entao e
+regular (tipo 3) -- diferente da hospedeira do material de referencia, que tem uma
+sub-gramatica de expressoes condicionais livre de contexto porque aquele sistema tem bloco
+de regras. Aqui o bloco de regras foi descartado (ver docs/01_recorte.md), entao essa
+camada nem existe.
+
+A mini-linguagem regular tambem e descrita por uma gramatica livre de contexto -- a NOTACAO
+tem parenteses aninhados --, mas a LINGUAGEM que cada expressao denota e regular (tipo 3).
+O que e regular e o conjunto de cadeias descrito pela expressao, nao o texto da expressao.
