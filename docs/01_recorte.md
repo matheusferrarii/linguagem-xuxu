@@ -4,9 +4,16 @@ Registro das três decisões que a Tarefa 1 pede. Cada uma vem com a alternativa
 descartada, porque é a comparação que torna a decisão compreensível quando
 ela precisar ser revisitada.
 
-**Domínio:** os padrões da Xuxu falam sobre o código-fonte da própria
-linguagem Xuxu. Quem escreve os padrões é quem constrói o compilador da
-Xuxu; a entrada processada é um arquivo `.xuxu`.
+**Domínio:** o arquivo `.lex` é a **interface do sistema** — quem adota a
+linguagem escreve os padrões do vocabulário que quer usar. Trocando esse
+arquivo, o mesmo motor reconhece programas escritos em outra língua, ou com
+duas grafias convivendo. Quem constrói o compilador define o motor; quem usa
+a linguagem define o vocabulário.
+
+*Alternativa descartada:* manter os padrões como peça interna, visível apenas
+ao construtor do compilador. Descartada porque elimina o diferencial da
+proposta: a separação entre motor e vocabulário é o que torna o sistema
+reutilizável e o que produz a pergunta teórica do item seguinte.
 
 ## Que classe de padrões o sistema aceita
 
@@ -28,7 +35,7 @@ linguagens regulares e não pode ser compilado para autômato finito.
 **Decisão:** um arquivo de especificação (extensão `.lex`) é uma sequência
 de declarações `pattern NOME = /regex/;`, uma por classe léxica. Não há
 bloco de regras condicionais: a classificação de cada trecho do arquivo
-`.xuxu` de entrada é automática, por casamento mais longo entre os padrões
+de entrada é automática, por casamento mais longo entre os padrões
 declarados, com a ordem de declaração como critério de desempate.
 
 A gramática completa está em [`01_gramatica.txt`](01_gramatica.txt), e o
@@ -37,18 +44,27 @@ exemplo canônico em [`exemplos/exemplo01.lex`](../exemplos/exemplo01.lex).
 **Descartado:** um bloco `rule { on X(x) where ... => emit(...) }`, como o
 do material de referência. Lá ele existe porque o sistema busca padrões
 condicionalmente sobre um domínio externo (e-mails, números acima de um
-limite). Aqui o objetivo é só reconhecer e classificar os tokens do próprio
-código-fonte da Xuxu — não há condição a avaliar, então o bloco de regras
-não paga o que custa: seria uma camada inteira (linguagem de condições,
-bytecode, avaliador) sem uso real neste recorte.
+limite). Aqui o objetivo é reconhecer e classificar os tokens da linguagem —
+não há condição a avaliar, então o bloco de regras não paga o que custa.
 
 ## O que o sistema produz
 
-**Decisão:** a lista de tokens reconhecidos no arquivo `.xuxu` de entrada,
-na ordem em que aparecem, cada um com `(classe, valor, posição inicial)`.
+**Decisão:** o produto primário é o **arquivo de tabelas de transição do
+autômato** (extensão `.aut`), gerado a partir das expressões regulares
+declaradas no `.lex`. Um segundo componente lê esse arquivo para reconhecer
+tokens numa entrada qualquer — a separação entre "compilar os padrões" e
+"usar os padrões compilados" é o que permite os módulos futuros (geração de
+código, ambientes de execução) consumirem algo concreto.
 
-**Descartado:** compilar para um objeto de máquina (autômatos + bytecode +
-máquina virtual), como no material de referência. Essa camada faz sentido
-para uma ferramenta de busca de propósito geral sobre entrada externa; para
-o léxico da própria Xuxu, a lista de tokens classificados já é o produto
-final que o resto do compilador (quando existir) vai consumir.
+**Consequência teórica que o produto torna possível:** se `pare` é palavra
+reservada e o padrão de identificador aceita qualquer sequência de letras,
+existe cadeia que pertence às duas classes. Com o vocabulário vindo de fora,
+ninguém garante de antemão que isso não acontece. Descobrir se duas classes
+se sobrepõem é construir a máquina que reconhece o que ambas aceitam e
+perguntar se ela aceita alguma coisa — **interseção de autômatos**, decidida
+antes de qualquer programa ser lido.
+
+**Descartado (lista de tokens):** produzir diretamente a lista de tokens
+reconhecidos num arquivo de entrada, sem gravar o autômato. Descartado
+porque sem objeto gravado os módulos futuros — geração de código e ambientes
+de execução — ficam sem o que consumir no sistema.
