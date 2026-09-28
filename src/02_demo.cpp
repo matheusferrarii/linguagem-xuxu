@@ -6,6 +6,10 @@
 
 using namespace xuxu;
 
+static int casosTotal  = 0;
+static int casosRecusa = 0;
+static int casosFalhos = 0;
+
 static void secao(const std::string& titulo) {
     std::cout << "\n" << std::string(60, '=') << "\n"
               << "  " << titulo << "\n"
@@ -14,6 +18,7 @@ static void secao(const std::string& titulo) {
 
 static void testarOk(const std::string& expressao,
                      const std::string& descricao) {
+    ++casosTotal;
     const Resultado r = analisarExpressao(expressao);
     std::cout << "\n  " << descricao << "\n"
               << "  entrada : " << expressao << "\n";
@@ -21,6 +26,7 @@ static void testarOk(const std::string& expressao,
         std::cout << "  arvore  : " << formatarArvore(r.arvore) << "\n"
                   << "  nos     : " << tamanho(r.arvore) << "\n";
     } else {
+        ++casosFalhos;
         std::cout << "  [INESPERADO] erro:\n"
                   << formatarErro(expressao, r.erro) << "\n";
     }
@@ -28,12 +34,15 @@ static void testarOk(const std::string& expressao,
 
 static void testarErro(const std::string& expressao,
                        const std::string& descricao) {
+    ++casosTotal;
+    ++casosRecusa;
     const Resultado r = analisarExpressao(expressao);
     std::cout << "\n  " << descricao << "\n";
     if (!r.ok) {
         std::cout << "  recusado corretamente:\n"
                   << formatarErro(expressao, r.erro) << "\n";
     } else {
+        ++casosFalhos;
         std::cout << "  [INESPERADO] aceito: "
                   << formatarArvore(r.arvore) << "\n";
     }
@@ -42,12 +51,14 @@ static void testarErro(const std::string& expressao,
 static void testarConvergencia(const std::string& expr1,
                                const std::string& expr2,
                                const std::string& descricao) {
+    ++casosTotal;
     const Resultado r1 = analisarExpressao(expr1);
     const Resultado r2 = analisarExpressao(expr2);
     std::cout << "\n  " << descricao << "\n"
               << "  expr 1: " << expr1 << "\n"
               << "  expr 2: " << expr2 << "\n";
     if (!r1.ok || !r2.ok) {
+        ++casosFalhos;
         std::cout << "  [ERRO DE PARSE]\n";
         return;
     }
@@ -56,6 +67,7 @@ static void testarConvergencia(const std::string& expr1,
     if (a1 == a2) {
         std::cout << "  convergem: " << a1 << "\n";
     } else {
+        ++casosFalhos;
         std::cout << "  [NAO CONVERGEM]\n"
                   << "    arvore 1: " << a1 << "\n"
                   << "    arvore 2: " << a2 << "\n";
@@ -111,9 +123,16 @@ int main() {
     testarErro("a\\",    "barra invertida sem simbolo");
     testarErro("[]",     "classe de caracteres vazia");
     testarErro("|abc",   "alternancia sem lado esquerdo");
+    testarErro("",       "expressao vazia (caso de fronteira)");
 
     std::cout << "\n" << std::string(60, '=') << "\n"
-              << "  Concluido sem erros fatais.\n"
+              << "  casos totais: " << casosTotal
+              << ", casos de recusa: " << casosRecusa
+              << ", casos falhos: " << casosFalhos << "\n"
               << std::string(60, '=') << "\n";
+
+    if (casosFalhos > 0) {
+        return 1;
+    }
     return 0;
 }
