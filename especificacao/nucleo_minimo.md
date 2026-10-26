@@ -56,11 +56,11 @@ Aplicando o núcleo acima às categorias de `classes_lexicas.md`:
 | inteiro         | `[0-9]+`                    |
 | decimal         | `[0-9]+\.[0-9]+`            |
 
-Essas três são as implementadas e testadas pelo leitor em
-`src/leitor_padroes.py`. As demais classes (`string`, `caractere`,
-`operador_aritmetico`, etc.) ficam para uma próxima entrega — o núcleo
-mínimo já é suficiente para descrevê-las, falta só escrever o padrão de
-cada uma.
+Essas três são as primeiras implementadas no leitor de padrões
+(`src/02_regex.h` e `src/02_regex.cpp`). As demais classes (`string`,
+`caractere`, `operador_aritmetico`, etc.) serão adicionadas nas próximas
+entregas — o núcleo mínimo já é suficiente para descrevê-las, falta só
+escrever o padrão de cada uma.
 
 ## Descartado
 
