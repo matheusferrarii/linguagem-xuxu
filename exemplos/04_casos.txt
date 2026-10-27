@@ -1,0 +1,53 @@
+# padrao ;; cadeia ;; veredito (conferido a mao, sem executar)
+# base
+a	a	aceita
+a	b	recusa
+a		recusa
+xuxu	xuxu	aceita
+xuxu	xux	recusa
+# concatenacao
+ab	ab	aceita
+ab	ba	recusa
+abc	ab	recusa
+abc	abcd	recusa
+# alternancia
+a|b	a	aceita
+a|b	b	aceita
+a|b	c	recusa
+a|b	ab	recusa
+talvez|fudeu	fudeu	aceita
+talvez|fudeu	ouEntao	recusa
+# fecho
+a*		aceita
+a*	aaa	aceita
+a*	ab	recusa
+(a|b)*c	c	aceita
+(a|b)*c	abbac	aceita
+(a|b)*c	abba	recusa
+a**	aaa	aceita
+# fecho positivo
+a+		recusa
+a+	a	aceita
+a+	aaaa	aceita
+[0-9]+	2026	aceita
+[0-9]+	20a6	recusa
+# opcional
+ab?	a	aceita
+ab?	ab	aceita
+ab?	abb	recusa
+# coringa
+a.c	abc	aceita
+a.c	ac	recusa
+".*"	"Chuchu"	aceita
+".*"	Chuchu	recusa
+# agrupamento
+(ab)*	abab	aceita
+(ab)*	aba	recusa
+# classes
+[a-zA-Z_][a-zA-Z0-9_]*	contador1	aceita
+[a-zA-Z_][a-zA-Z0-9_]*	1contador	recusa
+[0-9]+\.[0-9]+	7.5	aceita
+[0-9]+\.[0-9]+	7.	recusa
+# e-mail reduzido
+[a-z]+@[a-z]+\.[a-z]+	xuxu@gmail.com	aceita
+[a-z]+@[a-z]+\.[a-z]+	xuxu@gmail	recusa

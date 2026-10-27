@@ -1,3 +1,6 @@
 *.exe
 *.o
 *.out
+src/04_demo
+src/afd
+src/02_demo
